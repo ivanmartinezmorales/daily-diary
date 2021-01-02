@@ -1,0 +1,7 @@
+# Environment variables
+.env
+
+# Possible server names
+life-server
+serverx
+main
