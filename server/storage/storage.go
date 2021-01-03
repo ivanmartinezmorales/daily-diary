@@ -5,14 +5,17 @@ import (
 	"log"
 	"os"
 
+	"github.com/ivanmartinezmorales/life-server/server/models"
 	"github.com/joho/godotenv"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
 )
 
+// DB The global of our DB
 var DB *gorm.DB
 
+// ConnectDB connects to the db and runs automigrations
 func ConnectDB() {
 	err := godotenv.Load()
 	if err != nil {
@@ -34,4 +37,10 @@ func ConnectDB() {
 	}
 
 	log.Println("Connected to db")
+
+	DB.Logger = logger.Default.LogMode(logger.Info)
+
+	log.Print("Running migrations...")
+
+	DB.AutoMigrate(&models.User{}, &models.Claims{})
 }
